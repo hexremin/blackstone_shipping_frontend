@@ -1,19 +1,26 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Box,
   TextField,
   Button,
-  Select,
-  MenuItem,
   FormControl,
   InputLabel,
   Typography,
   Container,
   Grid,
-  Autocomplete,
+  Select,
+  MenuItem,
+  CircularProgress,
   InputAdornment,
 } from "@mui/material";
-import { ImageNode } from "src/types/graphql/types/services.types";
+import Autocomplete from "@mui/material/Autocomplete";
+import axios from "axios";
+
+interface ImageNode {
+  node: { sourceUrl: string };
+}
 
 interface CarbonCalculatorInterface {
   calculatorSectionTitle: string;
@@ -21,80 +28,113 @@ interface CarbonCalculatorInterface {
   calculatorSectionContent: string;
 }
 
-const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
-  type PortOption = {
-    flag: string | undefined; label: string; value: string
-  };
+type PortOption = {
+  label: string;
+  value: string;
+  portNameOnly: string;
+  portCode: string;
+};
 
+const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
   const [pol, setPol] = useState<PortOption | null>(null);
   const [pod, setPod] = useState<PortOption | null>(null);
   const [grossWeight, setGrossWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("KGS");
-  const [mtco2e, setMtco2e] = useState("0 MTCO2e");
-  const [polid, setPolid] = useState("");
-  const [podid, setPodid] = useState("");
+  const [mtco2e, setMtco2e] = useState<string>("0 MTCO2e");
 
-  const availableTags = [
-    { label: "IND", value: "India", flag: "https://flagcdn.com/w40/in.png" },
-    { label: "CHN", value: "China", flag: "https://flagcdn.com/w40/cn.png" },
-    { label: "NEP", value: "Nepal", flag: "https://flagcdn.com/w40/np.png" },
-    { label: "BHU", value: "Bhutan", flag: "https://flagcdn.com/w40/bt.png" },
-  ];
+  const [loadingPol, setLoadingPol] = useState(false);
+  const [loadingPod, setLoadingPod] = useState(false);
+  const [polOptions, setPolOptions] = useState<PortOption[]>([]);
+  const [podOptions, setPodOptions] = useState<PortOption[]>([]);
 
-  interface PortDistance {
-    [key: string]: { [key: string]: number };
-  }
+  const [polSearch, setPolSearch] = useState("");
+  const [podSearch, setPodSearch] = useState("");
 
-  const portDistances: PortDistance = {
-    India: { China: 5000, Nepal: 1000, Bhutan: 800 },
-    China: { India: 5000, Nepal: 3000, Bhutan: 2500 },
-    Nepal: { India: 1000, China: 3000, Bhutan: 400 },
-    Bhutan: { India: 800, China: 2500, Nepal: 400 },
+  const API_BASE = "https://api.blackstoneshipping.com/master-api";
+
+  const debounce = (func: (...args: any[]) => void, delay: number) => {
+    let timer: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+    };
   };
 
-  const emissionFactor = 0.00002;
+  const fetchPorts = async (searchText: string, type: "POL" | "POD") => {
+    if (!searchText.trim()) return;
+
+    try {
+      type === "POL" ? setLoadingPol(true) : setLoadingPod(true);
+      const response = await axios.get(
+        `${API_BASE}/port/Get_Port_Auto?searchText=${searchText}&type=${type}`
+      );
+
+      const results = response.data?.result?.Table || [];
+      const mapped = results.map((p: any) => ({
+        label: p.Label,
+        value: p.Value,
+        portNameOnly: p.PortNameOnly,
+        portCode: p.PortCode,
+      }));
+      type === "POL" ? setPolOptions(mapped) : setPodOptions(mapped);
+    } catch (err) {
+      console.error("Error fetching ports:", err);
+    } finally {
+      type === "POL" ? setLoadingPol(false) : setLoadingPod(false);
+    }
+  };
+
+  const debouncedFetchPol = useMemo(
+    () => debounce((text: string) => fetchPorts(text, "POL"), 500),
+    []
+  );
+
+  const debouncedFetchPod = useMemo(
+    () => debounce((text: string) => fetchPorts(text, "POD"), 500),
+    []
+  );
 
   useEffect(() => {
-    if (pol) setPolid(pol.label);
-    if (pod) setPodid(pod.label);
-  }, [pol, pod]);
+    if (polSearch) debouncedFetchPol(polSearch);
+  }, [polSearch]);
 
-  const handleCalculate = () => {
-    if (!polid || !podid || !grossWeight) {
-      alert("Please fill all fields");
+  useEffect(() => {
+    if (podSearch) debouncedFetchPod(podSearch);
+  }, [podSearch]);
+
+  const handleCalculate = async () => {
+    if (!pol?.value || !pod?.value || !grossWeight) {
+      // alert("Please fill all fields");
       return;
     }
 
-    let weightInTons = parseFloat(grossWeight);
-    if (weightUnit === "KGS") {
-      weightInTons = weightInTons / 1000;
+    try {
+      const response = await axios.get(
+        `${API_BASE}/report/get_sustain_Web`,
+        {
+          params: {
+            PolID: pol.value,
+            PodID: pod.value,
+            GrWt: grossWeight,
+            WtUnit: weightUnit,
+            ContType: "G",
+          },
+        }
+      );
+
+      const result = response.data?.result?.Table?.[0]?.MTCO2e;
+      if (result !== undefined) {
+        setMtco2e(`${parseFloat(result).toFixed(2)} MTCO2e`);
+      }
+    } catch (err) {
+      console.error("Error fetching emission data:", err);
     }
-
-    const polCountry = availableTags.find((tag) => tag.label === polid)?.value;
-    const podCountry = availableTags.find((tag) => tag.label === podid)?.value;
-
-    if (!polCountry || !podCountry) {
-      alert("Invalid port selection");
-      return;
-    }
-
-    const distance = portDistances[polCountry]?.[podCountry] || 0;
-
-    if (distance === 0) {
-      alert("Invalid port combination");
-      return;
-    }
-
-    const calculatedMtco2e =
-      (weightInTons * distance * emissionFactor).toFixed(2) + " MTCO2e";
-    setMtco2e(calculatedMtco2e);
   };
 
   const styledContent = data.calculatorSectionContent.replace(
     /(sustainability@blackstoneshipping\.com)/g,
     '<a href="mailto:$1" style="color:#1A56DB;">$1</a>'
   );
-
 
   return (
     <Container maxWidth="lg">
@@ -109,79 +149,74 @@ const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
               style={{ objectFit: "cover", borderRadius: "8px" }}
             />
           </Grid>
+
           <Grid size={{ xs: 12, md: 7 }}>
             <Typography variant="h2" gutterBottom>
               {data.calculatorSectionTitle}
             </Typography>
+
+            {/* Port of Loading */}
             <Autocomplete
-              options={availableTags}
-              getOptionLabel={(option) => option.label}
+              options={polOptions}
+              loading={loadingPol}
               value={pol}
-              onChange={(event, newValue) => setPol(newValue)}
-              renderOption={(props, option) => (
-                <li {...props} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <img
-                    src={option.flag}
-                    alt={option.label}
-                    width="20"
-                    style={{ borderRadius: '3px' }}
-                  />
-                  {option.label}
-                </li>
-              )}
+              onChange={(e, newValue) => setPol(newValue)}
+              onInputChange={(e, value) => setPolSearch(value)}
+              getOptionLabel={(option) => option.label || ""}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <img src={pol?.flag} alt={pol?.label} width="20" style={{ borderRadius: '3px' }} />
-                      </InputAdornment>
-                    ),
-                  }}
                   label="Port of Loading (POL)"
+                  placeholder="Start typing to search port..."
                   margin="normal"
                   variant="outlined"
                   fullWidth
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loadingPol ? (
+                          <CircularProgress size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
                 />
               )}
             />
 
+            {/* Port of Discharge */}
             <Autocomplete
-              options={availableTags}
-              getOptionLabel={(option) => option.label}
+              options={podOptions}
+              loading={loadingPod}
               value={pod}
-              onChange={(event, newValue) => setPod(newValue)}
-              renderOption={(props, option) => (
-                <li {...props} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <img
-                    src={option.flag}
-                    alt={option.label}
-                    width="20"
-                    style={{ borderRadius: '3px' }}
-                  />
-                  {option.label}
-                </li>
-              )}
+              onChange={(e, newValue) => setPod(newValue)}
+              onInputChange={(e, value) => setPodSearch(value)}
+              getOptionLabel={(option) => option.label || ""}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <img src={pod?.flag} alt={pod?.label} width="20" style={{ borderRadius: '3px' }} />
-                      </InputAdornment>
-                    ),
-                  }}
                   label="Port of Discharge (POD)"
+                  placeholder="Start typing to search port..."
                   margin="normal"
                   variant="outlined"
                   fullWidth
+                  InputProps={{
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        {loadingPod ? (
+                          <CircularProgress size={20} />
+                        ) : null}
+                        {params.InputProps.endAdornment}
+                      </>
+                    ),
+                  }}
                 />
               )}
             />
+
             <Grid container spacing={2} alignItems="center" marginTop={1}>
               <Grid size={{ xs: 6 }}>
                 <TextField
@@ -194,6 +229,7 @@ const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
                   variant="outlined"
                 />
               </Grid>
+
               <Grid size={{ xs: 6 }}>
                 <FormControl fullWidth margin="normal" variant="outlined">
                   <InputLabel>Weight Unit</InputLabel>
@@ -207,6 +243,7 @@ const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
                   </Select>
                 </FormControl>
               </Grid>
+
               <Grid size={{ xs: 6 }}>
                 <Box
                   sx={{
@@ -223,6 +260,7 @@ const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
                   </Typography>
                 </Box>
               </Grid>
+
               <Grid size={{ xs: 6 }}>
                 <Button
                   fullWidth
@@ -237,20 +275,16 @@ const CarbonCalculator = ({ data }: { data: CarbonCalculatorInterface }) => {
             </Grid>
           </Grid>
         </Grid>
+
         <Box sx={{ mt: 4 }}>
           <Typography
             variant="body2"
             sx={{
               fontStyle: "medium italic",
-              "& p": {
-                fontStyle: "italic",
-              },
-
+              "& p": { fontStyle: "italic" },
             }}
             color="rgba(45, 55, 72, 0.5)"
-            dangerouslySetInnerHTML={{
-              __html: styledContent,
-            }}
+            dangerouslySetInnerHTML={{ __html: styledContent }}
           />
         </Box>
       </Box>

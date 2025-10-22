@@ -20,7 +20,7 @@ import brochure from "src/assets/icons/brochure.png";
 import service from "src/assets/icons/service.png";
 import whitepapper from "src/assets/icons/whitepapper.png";
 
-async function downloadFile(url: any) {
+function downloadFile(url: any) {
   // try {
   //   const response = await fetch(url);
   //   const blob = await response.blob();

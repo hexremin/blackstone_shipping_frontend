@@ -2012,7 +2012,7 @@ query GetDownloadsByCategory($slug: [String!]) {
       downloadOptions {
         downloadFile {
           node {
-            sourceUrl
+            mediaItemUrl
           }
         }
       }

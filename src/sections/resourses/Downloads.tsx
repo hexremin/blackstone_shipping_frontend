@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Button,
@@ -19,10 +20,27 @@ import brochure from "src/assets/icons/brochure.png";
 import service from "src/assets/icons/service.png";
 import whitepapper from "src/assets/icons/whitepapper.png";
 
+async function downloadFile(url: any) {
+  // try {
+  //   const response = await fetch(url);
+  //   const blob = await response.blob();
+  //   const link = document.createElement("a");
+  //   link.href = window.URL.createObjectURL(blob);
+  //   link.download = url.split("/").pop();
+  //   link.style.display = "none";
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   window.URL.revokeObjectURL(link.href);
+  //   document.body.removeChild(link);
+  // } catch (err) {
+  //   console.error("Download failed:", err);
+  // }
+  window.open(url, "_blank")
+}
+
 const Downloads = ({ data }: { data: ResourcesPageData }) => {
   const resourseData = data.page.resourcesPageDownloadsSection;
 
-  // 3 queries
   const { data: brochuresData, loading: brochuresLoading } =
     useQuery<GetDownloadsByCategoryResponse>(GET_DOWNLOADS, {
       variables: { slug: ["brochures"] },
@@ -75,7 +93,7 @@ const Downloads = ({ data }: { data: ResourcesPageData }) => {
               items={
                 brochuresData?.downloads?.nodes?.map((n) => ({
                   name: n.title,
-                  url: n.downloadOptions?.downloadFile?.node?.sourceUrl,
+                  url: n.downloadOptions?.downloadFile?.node?.mediaItemUrl,
                 })) || []
               }
             />
@@ -88,7 +106,7 @@ const Downloads = ({ data }: { data: ResourcesPageData }) => {
               items={
                 servicesData?.downloads?.nodes?.map((n) => ({
                   name: n.title,
-                  url: n.downloadOptions?.downloadFile?.node?.sourceUrl,
+                  url: n.downloadOptions?.downloadFile?.node?.mediaItemUrl,
                 })) || []
               }
             />
@@ -101,7 +119,7 @@ const Downloads = ({ data }: { data: ResourcesPageData }) => {
               items={
                 whitepapersData?.downloads?.nodes?.map((n) => ({
                   name: n.title,
-                  url: n.downloadOptions?.downloadFile?.node?.sourceUrl,
+                  url: n.downloadOptions?.downloadFile?.node?.mediaItemUrl,
                 })) || []
               }
             />
@@ -161,8 +179,10 @@ const DownloadCard = ({
         items.map((item, idx) => (
           <Button
             key={idx}
-            target="_blank"
-            href={item.url || "#"}
+            onClick={(e) => {
+              e.preventDefault();
+              downloadFile(item.url);
+            }}
             sx={{
               justifyContent: "space-between",
               background: "rgba(26, 86, 219, 1)",

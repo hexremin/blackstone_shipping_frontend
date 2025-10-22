@@ -21,6 +21,7 @@
     "@vis.gl/react-google-maps": "^1.5.2",
     "axios": "^1.10.0",
     "change-case": "^5.4.4",
+    "downloadjs": "^1.4.7",
     "formik": "^2.4.6",
     "graphql": "^16.11.0",
     "minimal-shared": "^1.0.8",

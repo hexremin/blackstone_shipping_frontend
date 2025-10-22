@@ -266,7 +266,7 @@ export interface GetDownloadsByCategoryResponse {
       downloadOptions: {
         downloadFile: {
           node: {
-            sourceUrl: string;
+            mediaItemUrl: string;
           };
         } | null;
       } | null;

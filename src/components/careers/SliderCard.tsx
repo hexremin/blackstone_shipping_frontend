@@ -139,7 +139,7 @@ const SliderCard = ({ data, isPlayable }: { data: CardData, isPlayable: boolean 
 
       <Typography
         variant="h5"
-        sx={{ textAlign: "left", textTransform: "capitalize" }}
+        sx={{ textAlign: "left", textWrap: "wrap", lineHeight: '150% !important' }}
       >
         {data.title}
       </Typography>

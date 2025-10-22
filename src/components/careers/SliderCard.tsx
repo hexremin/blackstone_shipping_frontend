@@ -2,6 +2,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useRef } from "react";
 import YouTube, { YouTubeProps } from "react-youtube";
+import { useResponsive } from "src/hooks/useResponsive";
 
 interface CardData {
   title: string;
@@ -20,6 +21,8 @@ const SliderCard = ({ data, isPlayable }: { data: CardData, isPlayable: boolean 
   const ytPlayerRef = useRef<any>(null);
   const videoUrl = data.peoplesOptions?.videoUrl;
   const thumbnail = data.featuredImage?.node?.sourceUrl;
+
+  const mdDown = useResponsive("down", "md")
 
   const getYouTubeId = (url: string): string | null => {
     if (!url) return null;
@@ -43,8 +46,8 @@ const SliderCard = ({ data, isPlayable }: { data: CardData, isPlayable: boolean 
   const videoId = videoUrl ? getYouTubeId(videoUrl) : null;
 
   const youtubeOpts: YouTubeProps["opts"] = {
-    width: "225px",
-    height: "531px",
+    width: mdDown ? "100%" : "100%",
+    height: mdDown ? "110%" : "100%",
     playerVars: {
       autoplay: 0,
       mute: 0,

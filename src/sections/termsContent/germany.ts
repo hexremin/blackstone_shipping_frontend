@@ -7,8 +7,8 @@ const germanyTerms = `
     <h2>TRADING TERMS & CONDITIONS</h2>
     <p>All our transactions are subject to the German Freight Forwarders' Standard Terms and Conditions (ADSp) A D S p 2017 ((Allgemeine Deutsche Spediteurbedingungen 2017 – ADSp 2017) Unless proven otherwise they will be deemed accepted. Links to the text are as below.</p>
     <ul>
-        <li><a href="https://blackstoneshipping.com/ENG_ADSp%202017.pdf">English Version: ENG ADSp2017</a></li>
-        <li><a href="https://blackstoneshipping.com/DEU_ADSp%202017.pdf">German Version: DEU ADSp2017</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/ENG_ADSp_202017.pdf" target="_blank" rel="noopener noreferrer">English Version: ENG ADSp2017</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/DEU_ADSp_202017.pdf" target="_blank" rel="noopener noreferrer">German Version: DEU ADSp2017</a></li>
     </ul>
 
     <h2>EMAIL DISCLAIMER</h2>

@@ -12,19 +12,19 @@ const belgiumTerms = `
         <li>CMR CONDITIONS</li>
     </ol>
     <ul>
-        <li><a href="https://blackstoneshipping.com/NED_ABEV.pdf">ALGEMENE LOGISTIEKE VOORWAARDEN - Dutch Version</a></li>
-        <li><a href="https://blackstoneshipping.com/FRA_ABEV.pdf">CONDITIONS GENERALES DE PRESTATIONS LOGISTIQUES - French Version</a></li>
-        <li><a href="https://blackstoneshipping.com/GER_ABEV.pdf">ALLGEMEINE BEDINGUNGEN FÜR LOGISTIKDIENSTLEISTUNGEN - German Version</a></li>
-        <li><a href="https://blackstoneshipping.com/ENG_ABEV.pdf">GENERAL LOGISTIC CONDITIONS - English Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-NL.pdf" target="_blank" rel="noopener noreferrer">ALGEMENE LOGISTIEKE VOORWAARDEN - Dutch Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-FR.pdf" target="_blank" rel="noopener noreferrer">CONDITIONS GENERALES DE PRESTATIONS LOGISTIQUES - French Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-DE.pdf" target="_blank" rel="noopener noreferrer">ALLGEMEINE BEDINGUNGEN FÜR LOGISTIKDIENSTLEISTUNGEN - German Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-EN.pdf" target="_blank" rel="noopener noreferrer">GENERAL LOGISTIC CONDITIONS - English Version</a></li>
     </ul>
 
     <h2>TRADING TERMS & CONDITIONS</h2>
     <p>All our transactions are subject to the Belgian Freight Forwarders Standard Trading Conditions 2005. The text of those Conditions has been published under number 05090237 in the Annexe au Moniteur Belge dated June 24th, 2005. Unless proven otherwise they will be deemed accepted. Annex to the text are as below.</p>
     <ul>
-        <li><a href="https://blackstoneshipping.com/BFFSTC-NL.pdf">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - Dutch Version</a></li>
-        <li><a href="https://blackstoneshipping.com/BFFSTC-FR.pdf">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - French Version</a></li>
-        <li><a href="https://blackstoneshipping.com/BFFSTC-DE.pdf">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - German Version</a></li>
-        <li><a href="https://blackstoneshipping.com/BFFSTC-EN.pdf">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - English Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-NL.pdf" target="_blank" rel="noopener noreferrer">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - Dutch Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-FR.pdf" target="_blank" rel="noopener noreferrer">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - French Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-DE.pdf" target="_blank" rel="noopener noreferrer">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - German Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/BFFSTC-EN.pdf" target="_blank" rel="noopener noreferrer">BELGIAN FREIGHT FORWARDERS STANDARD TRADING CONDITIONS - English Version</a></li>
     </ul>
 
     <h2>EMAIL DISCLAIMER</h2>

@@ -8,8 +8,8 @@ const netherlandsTerms = `
     <p>All our transactions are subject to the DUTCH FORWARDING CONDITIONS - GENERAL CONDITIONS OF FENEX (Netherlands Association for Forwarding and Logistics) deposited at the Registry of the District Courts at Amsterdam and Rotterdam on 1 May 2018. Unless proven otherwise they will be deemed accepted. Links to the text are as below. All rights reserved Blackstone Shipping Netherlands BV;</p>
     <a href="http://www.fenex.nl/fenex-voorwaarden">http://www.fenex.nl/fenex-voorwaarden</a>
     <ul>
-        <li><a href="https://blackstoneshipping.com/NED_FENEX.pdf">Netherlands Version</a></li>
-        <li><a href="https://blackstoneshipping.com/ENG_FENEX.pdf">English Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/NED_FENEX.pdf" target="_blank" rel="noopener noreferrer" >Netherlands Version</a></li>
+        <li><a href="https://wp.blackstoneshipping.com/files/ENG_FENEX.pdf" target="_blank" rel="noopener noreferrer">English Version</a></li>
     </ul>
 
     <h2>EMAIL DISCLAIMER</h2>

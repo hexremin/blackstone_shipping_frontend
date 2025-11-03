@@ -1,5 +1,4 @@
-import { Container, Stack, Typography } from "@mui/material";
-import { Grid } from "@mui/system";
+import { Container, Stack, Typography, Grid } from "@mui/material";
 import React from "react";
 import SectionHead from "src/components/sectionHead/SectionHead";
 import IndustryCoverageCard from "../../components/home/IndustryCoverageCard";

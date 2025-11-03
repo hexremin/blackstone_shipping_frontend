@@ -7,7 +7,7 @@ const warehouseTerms = `
 
     <h4>General</h4>
     <p>All rates are based on normal working hours from Monday to Friday, 07h00-17h00 hours.</p>
-    <p>www.blackstoneshipping.com</p>
+    <a href="https://www.blackstoneshipping.com" >www.blackstoneshipping.com</a>
     <p>All rates are subject to current market situation (gas/energy/labour/availability of required rawmaterials). In case these situations changes, Blackstone Shipping withholds the right to amend the rates.</p>
     <p>Fuel Surcharge will be adjusted on a monthly basis, based on the fuel rate of prior month.</p>
     <p>customers are asked to apply for atleast 14 calender days combined free time (demurrage/detention/storage);for high volume arrivals, customers are asked to apply for 21 calender days free time. Customer guarantees to Blackstone Shipping that Blackstone Shipping will not bear any responsibility for demurrage & detention costs in case of a shorter free time period.</p>
@@ -42,8 +42,8 @@ const warehouseTerms = `
 
     <h4>Genral Terms & Conditions</h4>
     <p>This offer is subject to Blackstone Shipping General Standard Terms and Conditions (GSTC) a copy of which is available upon request or at www.blackstoneshipping.com as per links below. The GSTC apply to this offer and any final agreement and contains provisions which limit Blackstone Shipping's legal liability:</p>
-    <a href="https://www.blackstoneshipping.com/Blackstone_Shipping_General_Standard_Terms_Conditions.pdf">
-    https://www.blackstoneshipping.com/Blackstone_Shipping_General_Standard_Terms_Conditions.pdf</a>
+    <a href="https://wp.blackstoneshipping.com/files/BSS%20General%20Standard%20Terms%20&%20Conditions.pdf" target="_blank" rel="noopener noreferrer">
+    https://wp.blackstoneshipping.com/files/BSS%20General%20Standard%20Terms%20&%20Conditions.pdf</a>
     <br/>
     GENERAL LOGISTICS CONDITIONS:
     <a href="https://www.blackstoneshipping.com/general/terms-conditions/belgium"> https://www.blackstoneshipping.com/general/terms-conditions/belgium.</a>

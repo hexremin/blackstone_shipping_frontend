@@ -2,7 +2,7 @@ const unitedKingdomTerms = `
 <body>
     <h1>TERMS & CONDITIONS, DISCLAIMERS & PRIVACY POLICY</h1>
 
-    <p>This document provides you with information about Blackstone Shipping’s Terms & Conditions of Trading & the Privacy Policy governing your business with us. These may exclude or limit our liability in the event of claims for loss, damage and delay to cargo or otherwise and provide for all disputes to be arbitrated in the UK under English and Wales law. Please view and download our Terms and Conditions of Trading from our website, <a href="https://blackstoneshipping.com/terms&conditions.html">https://blackstoneshipping.com/terms&conditions.html</a></p>
+    <p>This document provides you with information about Blackstone Shipping’s Terms & Conditions of Trading & the Privacy Policy governing your business with us. These may exclude or limit our liability in the event of claims for loss, damage and delay to cargo or otherwise and provide for all disputes to be arbitrated in the UK under English and Wales law. Please view and download our Terms and Conditions of Trading from our website, <a href="https://blackstoneshipping.com/general/terms-conditions">https://blackstoneshipping.com/general/terms-conditions</a></p>
 
     <h2>BIFA conditions</h2>
 

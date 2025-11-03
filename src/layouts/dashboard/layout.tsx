@@ -1,9 +1,17 @@
 import type { Breakpoint } from "@mui/material/styles";
 
 import { merge } from "es-toolkit";
-import { useBoolean } from "minimal-shared/hooks";
+import { useState, useCallback } from "react";
 
 import { useTheme } from "@mui/material/styles";
+
+function useBoolean(initial = false) {
+  const [value, setValue] = useState<boolean>(initial);
+  const onTrue = useCallback(() => setValue(true), []);
+  const onFalse = useCallback(() => setValue(false), []);
+  const toggle = useCallback(() => setValue((v) => !v), []);
+  return { value, onTrue, onFalse, toggle, setValue };
+}
 
 import { layoutClasses } from "../core/classes";
 import { HeaderSection } from "../core/header-section";
@@ -24,6 +32,8 @@ import type { HeaderSectionProps } from "../core/header-section";
 import type { LayoutSectionProps } from "../core/layout-section";
 import type { MainSectionProps } from "../core/main-section";
 import { useRouter } from "src/routes/hooks";
+
+
 
 // ----------------------------------------------------------------------
 
@@ -167,4 +177,4 @@ export function DashboardLayout({
       {renderFooter()}
     </LayoutSection>
   );
-}
+} 

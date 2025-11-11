@@ -25,7 +25,6 @@ import LoadingFallback from "src/components/LoadingFallback";
 import { Scrollbar } from "src/components/scrollbar";
 import { RouterLink } from "src/routes/components";
 import { Iconify } from "src/components/iconify";
-import { t } from "node_modules/react-router/dist/development/index-react-server-client-DXb0OgpJ.mjs";
 import { generateEmailSubscribeTemplate, generateEmailTemplate } from "src/utils/generateEmailTemplate";
 import { send } from "process";
 import { sendEmail } from "src/utils/sendEmail";

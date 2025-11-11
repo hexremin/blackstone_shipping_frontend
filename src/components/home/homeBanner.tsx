@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useRef, Suspense } from "react";
 import {
   Button,
   Container,
@@ -14,9 +15,9 @@ import { ArrowForward } from "@mui/icons-material";
 import { GET_SLIDERS } from "src/graphql/queries";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "src/routes/hooks";
-import MobileBanner from "./MobileBanner";
-import videojs, { VideoJsPlayer, VideoJsPlayerOptions } from "video.js";
-import VideoJS from "../VideoJs";
+// lazy-load MobileBanner and VideoJS
+const MobileBanner = React.lazy(() => import("./MobileBanner"));
+const VideoJS = React.lazy(() => import("../VideoJs"));
 import arrow from "src/assets/icons/arrowcircle.png";
 import LoadingFallback from "../LoadingFallback";
 
@@ -48,12 +49,12 @@ export interface SliderNode {
 const HomeBanner: React.FC = () => {
   const { loading, error, data } = useQuery<GetSlidersResponse>(GET_SLIDERS);
   const router = useRouter();
-  const playerRef = useRef<VideoJsPlayer | null>(null);
+  const playerRef = useRef<any | null>(null);
 
   if (loading) return <LoadingFallback />;
   if (error) return <p>Error: {error.message}</p>;
 
-  const videoJsOptions: VideoJsPlayerOptions = {
+  const videoJsOptions: any = {
     autoplay: true,
     controls: false,
     responsive: true,
@@ -70,7 +71,7 @@ const HomeBanner: React.FC = () => {
     ],
   };
 
-  const handlePlayerReady = (player: VideoJsPlayer) => {
+  const handlePlayerReady = (player: any) => {
     playerRef.current = player;
 
     player.on("waiting", () => {
@@ -101,7 +102,9 @@ const HomeBanner: React.FC = () => {
           }}
         >
           <Box sx={{ filter: "brightness(0.5)" }}>
-            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+            <Suspense fallback={<LoadingFallback />}>
+              <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+            </Suspense>
           </Box>
         </Box>
 
@@ -256,7 +259,9 @@ const HomeBanner: React.FC = () => {
       {/* MOBILE SCREEEN */}
       <Stack display={{ xs: "block", lg: "none" }}>
         <Container maxWidth="xl">
-          <MobileBanner />
+          <Suspense fallback={<LoadingFallback />}>
+            <MobileBanner />
+          </Suspense>
           <Stack width={"100%"} gap={4}>
             <Carousel
               showArrows={false}
@@ -380,7 +385,9 @@ const HomeBanner: React.FC = () => {
                 </Box>
               ))}
             </Carousel>
-            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+            <Suspense fallback={<LoadingFallback />}>
+              <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+            </Suspense>
           </Stack>
         </Container>
       </Stack>
